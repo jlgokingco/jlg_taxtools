@@ -19,9 +19,11 @@ else
         else
             echo "Found process but could not locate socket. Starting fresh..."
             eval "$(ssh-agent -s)"
+            ssh-add ~/.ssh/id_ed25519
         fi
     else
         echo "ssh-agent not found. Starting a new one..."
         eval "$(ssh-agent -s)"
+        ssh-add ~/.ssh/id_ed25519
     fi
 fi
