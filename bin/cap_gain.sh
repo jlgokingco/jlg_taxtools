@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
 
+# Exit if input argument is not specified
+if [ -z "$1" ]; then
+    echo "Error: No directory argument specified." >&2
+    echo "Usage: $0 <directory>" >&2
+    exit 1
+fi
+
+# Exit if the directory is invalid
+if [ ! -d "$1" ]; then
+    echo "Error: Directory '$1' is invalid or does not exist." >&2
+    exit 1
+fi
+
 # 1. Given a Schwab Capital Gain Realized file, split the file based on empty lines
 #    This will create multiple files
 #
