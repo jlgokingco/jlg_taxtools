@@ -24,3 +24,6 @@ ext_stg_from_etrade.sh tmp.txt >> stg.txt
 # 4. Add them all up and report it
 add.sh ltg.txt
 add.sh stg.txt
+
+# 5. Cleanup files
+rm ltg.txt stg.txt tmp.txt
