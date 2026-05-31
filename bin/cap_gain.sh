@@ -30,7 +30,7 @@ find $1 -regex '.*All_Accounts_GainLoss_Realized.*_1.csv' | xargs ext_stg_from_s
 find $1 -regex '.*All_Accounts_GainLoss_Realized.*_3.csv' | xargs ext_stg_from_sch.sh >> stg.txt
 
 # 3. Handle Etrade Files
-find $1 -name 'GainsAndLossesDowload.csv' -exec get_line.py -f {} "^TAXABLE.*SUMMARY" 2 \; > tmp.txt
+find $1 -name 'GainsAndLossesDowload.csv' -exec get_line.py {} "^TAXABLE.*SUMMARY" 2 \; > tmp.txt
 ext_ltg_from_etrade.sh tmp.txt >> ltg.txt
 ext_stg_from_etrade.sh tmp.txt >> stg.txt
 

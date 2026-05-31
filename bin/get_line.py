@@ -1,19 +1,5 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """get_line.py
-
-Usage patterns supported (backwards-compatible):
-  get_line.py <filename> <pattern> [<offset>]
-  get_line.py <pattern> <offset> --file <filename>
-  cat file | get_line.py <pattern> <offset>
-
-Behaviour:
-  - Finds lines matching the given regular expression (first capture not used).
-  - For each match, prints the line at (match_line_index + offset).
-  - Offset may be negative; defaults to 0 (print the matching line).
-
-This keeps compatibility with calls like:
-  get_line.py "^TAXABLE.*SUMMARY" 2 --file file.csv
-while making the filename the first positional argument when possible.
 """
 import sys
 import argparse
@@ -23,42 +9,23 @@ import re
 
 def parse_args():
     p = argparse.ArgumentParser(description="Print line relative to matches of a regex")
-    p.add_argument('positional', nargs='*', help='[filename] pattern [offset]')
-    p.add_argument('--file', '-f', dest='file', help='input file (alternate to giving filename first)')
+    p.add_argument('filename', default=None, help='input filename')
+    p.add_argument('pattern',  default=None, help='pattern')
+    p.add_argument('offset',   default=None, help='offset')
     p.add_argument('--encoding', default='utf-8', help='file encoding (default: utf-8)')
     return p.parse_args()
 
 
 def main():
     args = parse_args()
-    pos = list(args.positional)
 
-    filename = None
-    pattern = None
-    offset = 0
+    if args.filename == None or args.pattern == None or args.offset == None:
+        sys.exit(1)
 
-    # If the first positional arg exists and is a path to a file, treat it as filename
-    if len(pos) >= 1 and os.path.exists(pos[0]):
-        filename = pos.pop(0)
+    filename = args.filename
+    pattern  = args.pattern 
+    offset   = int(args.offset)
 
-    # If --file provided, it takes precedence unless filename already set
-    if args.file and not filename:
-        filename = args.file
-
-    # Now interpret remaining positionals: pattern and optional offset
-    if len(pos) >= 1:
-        pattern = pos[0]
-    if len(pos) >= 2:
-        try:
-            offset = int(pos[1])
-        except ValueError:
-            print(f"Error: offset must be an integer, got '{pos[1]}'", file=sys.stderr)
-            sys.exit(2)
-
-    # If pattern not provided, that's an error
-    if pattern is None:
-        print("Usage: get_line.py <filename> <pattern> [<offset>]\n       or: get_line.py <pattern> <offset> --file <filename>", file=sys.stderr)
-        sys.exit(2)
 
     # Read input lines
     if filename:
