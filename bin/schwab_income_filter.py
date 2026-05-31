@@ -13,7 +13,7 @@ FILTER_OPTIONS = {
     'Account_Type': 'Account Type',
     'Security_Description': 'Security Description',
     'Symbol': 'Symbol',
-    'Type': 'Security Type',
+    'Security_Type': 'Security Type',
     'Transaction_Type': 'Transaction Type',
     'Income_Type': 'Income Type',
 }
