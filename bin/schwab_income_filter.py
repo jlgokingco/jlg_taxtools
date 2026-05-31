@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""filter_csv.py - Filter and print records from Schwab-style CSV files."""
+"""schwab_income_filter.py - Filter and print records from Schwab-style CSV files."""
 
 import argparse
 import csv
@@ -8,6 +8,7 @@ import re
 import sys
 
 FILTER_OPTIONS = {
+    'Transaction_Date': 'Transaction Date',
     'Account_Number': 'Account Number',
     'Account_Name': 'Account Name',
     'Account_Type': 'Account Type',
